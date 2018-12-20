@@ -1,0 +1,12 @@
+<div class="inner">
+  <div *ngIf="isTooltipContentTemplate; else elseBlock">
+    <ng-template [ngTemplateOutlet]="content"></ng-template>
+  </div>
+
+  <ng-template #elseBlock>
+    <div>{{content}}</div>
+  </ng-template>
+</div>
+<div class="arrow"></div>
+
+
