@@ -3,47 +3,39 @@ import {
   ElementRef
 } from "@angular/core";
 
-import * as $ from "jquery";
 import {PositionDescription, TooltipPosition} from './interfaces/';
 
 @Injectable()
 export class PositionService {
-
-  private isStaticPositioned(nativeEl:any):any {
-    return ($(nativeEl).css("position") || "static" ) === "static";
-  }
 
   public positionElements(
     hostEl: any,
     targetEl: any,
     positionStr: string = "top"): TooltipPosition {
     const bufferDistance = 10;
-    let position = this.breakPositionString(positionStr),
-      $hostEl = $(hostEl),
-      hostElPos = $hostEl.position(),
-      $targetEl = $(targetEl)
+    const position = this.breakPositionString(positionStr)
 
     let shiftWidth: {[key:string]: any} = {
       center: function () {
-        return hostElPos.left + ($hostEl.width() / 2) - ($targetEl.innerWidth() / 2);
+        return hostEl.offsetLeft + (hostEl.offsetWidth / 2) - (targetEl.offsetWidth / 2);
       },
       left: function () {
-        return hostElPos.left - $targetEl.innerWidth() - bufferDistance;
+        return hostEl.offsetLeft - targetEl.offsetWidth - bufferDistance;
       },
       right: function () {
-        return hostElPos.left + $hostEl.width() + bufferDistance;
+        return hostEl.offsetLeft + hostEl.offsetWidth + bufferDistance;
       }
     };
 
     let shiftHeight:{[key:string]: any} = {
       center: function ():number {
-        return hostElPos.top + ($hostEl.height() / 2) - ($targetEl.innerHeight() / 2);
+        return hostEl.offsetTop + (hostEl.offsetHeight / 2) - (targetEl.offsetHeight / 2);
       },
       top: function ():number {
-        return hostElPos.top - $targetEl.innerHeight() - bufferDistance;
+        return hostEl.offsetTop - targetEl.offsetHeight - bufferDistance;
       },
       bottom: function ():number {
-        return hostElPos.top + $hostEl.height() + bufferDistance;
+        return hostEl.offsetTop + hostEl.offsetHeight + bufferDistance;
       }
     };
 

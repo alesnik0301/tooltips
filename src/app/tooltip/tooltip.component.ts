@@ -2,8 +2,6 @@ import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnChanges} from 
 import {PositionService} from './../position.service';
 import {TooltipOptions} from './../interfaces/';
 
-import * as $ from "jquery";
-
 @Component({
   selector: 'tooltip',
   templateUrl: './tooltip.component.html',
@@ -26,22 +24,19 @@ get isTooltipContentTemplate() {
 }
 
   private position() {
-    $(this.elementRef.nativeElement).addClass([
-      this.tooltipOptions.position]);
+    const nativeElementRef = this.elementRef.nativeElement;
+
+    nativeElementRef.classList.add(this.tooltipOptions.position);
 
     const position = this.positionService.positionElements(
       this.parentEl.nativeElement,
-      this.elementRef.nativeElement,
+      nativeElementRef,
       this.tooltipOptions.position
     );
 
-    $(this.elementRef.nativeElement).css(
-      {
-        top: position.top + 'px',
-        left: position.left + "px",
-        display: "block",
-      }
-    );
+    nativeElementRef.style.top = position.top + 'px';
+    nativeElementRef.style.left = position.left + 'px';
+    nativeElementRef.style.display = 'block';
   }
 
   ngAfterViewInit(): void {

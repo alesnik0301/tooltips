@@ -6,14 +6,11 @@ import {Input,
   ContentChild,
   ElementRef,
   OnInit,
-  ComponentFactoryResolver} from '@angular/core';
+  ComponentFactoryResolver, HostListener} from '@angular/core';
 
 import {PositionService} from './position.service';
 import {Tooltip} from './tooltip/tooltip.component';
 import {TooltipOptions} from './interfaces/';
-
-
-import * as $ from 'jquery';
 
 const defaultTooltipOptions: TooltipOptions = {
   position: 'top'
@@ -21,11 +18,14 @@ const defaultTooltipOptions: TooltipOptions = {
 
 @Directive({
   selector: '[tooltip]'
+  // exportAs
 })
 
 export class TooltipDirective implements OnInit {
   @Input('tooltip') private tooltipOptions: any;
   @ContentChild('tooltipTemplate') private tooltipTemplate: TemplateRef<Object>;
+  @HostListener('mouseover') onMouseOver() {this.showTooltip()};
+  @HostListener('mouseout') onMouseOut() {this.hideTooltip()};
 
   private tooltip: ComponentRef<Tooltip>;
   private tooltipId: string;
@@ -42,19 +42,12 @@ export class TooltipDirective implements OnInit {
   }
 
   ngOnInit() {
-    const element = $(this.elementRef.nativeElement);
-
-      element.on('mouseover', () => {
-          this.showTooltip();
-      });
-
-      element.on('mouseout', () => {
-          this.hideTooltip();
-      });
   }
 
   private showTooltip() {
       const ComponentFactory = this.componentResolver.resolveComponentFactory(Tooltip);
+      // ViewContainerRef
+      // ApplicationRef
       this.tooltip = this.viewContainer.createComponent(ComponentFactory);
       console.log('this.tooltip', this.tooltip);
       this.tooltip.instance['content'] = this.getTooltipContent();
