@@ -8,9 +8,9 @@ import {Input,
   OnInit,
   ComponentFactoryResolver, HostListener} from '@angular/core';
 
-import {PositionService} from './position.service';
-import {Tooltip} from './tooltip/tooltip.component';
-import {TooltipOptions} from './interfaces/';
+import {PositionService} from '../services/position.service';
+import {Tooltip} from '../components/tooltip.component';
+import {TooltipOptions} from '../interfaces/index';
 
 const defaultTooltipOptions: TooltipOptions = {
   position: 'top'
@@ -18,7 +18,6 @@ const defaultTooltipOptions: TooltipOptions = {
 
 @Directive({
   selector: '[tooltip]'
-  // exportAs
 })
 
 export class TooltipDirective implements OnInit {

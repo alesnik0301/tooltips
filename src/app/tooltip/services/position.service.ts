@@ -3,7 +3,7 @@ import {
   ElementRef
 } from "@angular/core";
 
-import {PositionDescription, TooltipPosition} from './interfaces/';
+import {PositionDescription, TooltipPosition} from '../interfaces/index';
 
 @Injectable()
 export class PositionService {

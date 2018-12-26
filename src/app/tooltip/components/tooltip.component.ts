@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnChanges} from '@angular/core';
-import {PositionService} from './../position.service';
-import {TooltipOptions} from './../interfaces/';
+import {PositionService} from '../services/position.service';
+import {TooltipOptions} from '../interfaces/index';
 
 @Component({
   selector: 'tooltip',
